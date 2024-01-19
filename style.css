@@ -1,0 +1,78 @@
+.nav-link{
+    color: bisque;
+    font-size: 1.5rem;
+}
+.search{
+    border-color: transparent;
+    border: 2px solid #e1bfbf;
+    font-size: 1.3rem;
+    border-radius: 100px;
+}
+.search::placeholder{
+    color: antiquewhite;
+}
+nav button{
+    border-radius: 100px !important;
+}
+
+/* upload */
+.upload-image{
+    /* border-color: #607274 ; */
+    /* min-height: 100vh; */
+    padding: 20px;
+    display: flex;
+    align-items: center;
+
+}
+.upload-form{
+    border-color: #607274 ;
+    min-height: 100vh;
+    padding: 20px;
+}
+.upload-form input{
+    border: 1px solid #B2A59B;
+}
+.upload-form .form-control:hover{
+    border: 2px solid #674328;
+    background-color: #67d7d000;
+}
+/* loading */
+.loading{
+    position: absolute;
+    background-color: #24242436;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden; /*hiding the tag */
+}
+.progress{
+    min-width: 80px;
+    min-height: 80px;
+    background-color: transparent;
+    border: 4px solid #3844e0;
+    border-radius: 100px;
+    position: relative;
+    animation: spinner 1s linear infinite;
+}
+.progress::before{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 7px solid #3844e0;
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 100px;
+}
+
+@keyframes spinner{
+    0%{
+        transform: rotate(-360deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

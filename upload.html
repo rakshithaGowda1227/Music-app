@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> 
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-secondary">
+        <div class="container-fluid">
+          <a class="navbar-brand fs-1 text-white" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Music</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Albums</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Popular</a>
+              </li>
+            
+              <li class="nav-item">
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Upload</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2 search" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn bg-white fs-4" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+    </nav>
+
+
+    <div class="loading" id="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visuaally-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <div class="upload container">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-12 col-md-6">
+                <div class="upload-image">
+                    <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-135.jpg?size=626&ext=jpg&ga=GA1.1.873192090.1685533868&semt=sph" alt="" class="w-100">
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6">
+                <div class="upload-form">
+                    <div class="form-group mt-4">
+                        <label for="" class="form-label">Username</label>
+                        <input type="text" placeholder="Enter Your Name" required id="username" class="form-control p-3">
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label for="" class="form-label">Album</label>
+                        <input type="text" placeholder="Enter Album Name" required id="album" class="form-control p-3">
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label for="" class="form-label">Album</label>
+                        <input type="file" required id="song" class="form-control p-3">
+                        <progress min="0" max="100" value="0" id="progress"></progress>
+                        <span id="result"></span>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <textarea name="desc" required id="desc" cols="30" rows="5" placeholder="Something about Album.." class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button class="btn btn-primary text-white fs-4 w-100 p-3" id="uploadbtn">Upload your song</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+
+    <script>
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+  apiKey: "AIzaSyCw4t8yR2rKwudQLAvMFjdjFAl87ZQ8cDk",
+  authDomain: "music-app-7e5ab.firebaseapp.com",
+  databaseURL: "https://music-app-7e5ab-default-rtdb.firebaseio.com",
+  projectId: "music-app-7e5ab",
+  storageBucket: "music-app-7e5ab.appspot.com",
+  messagingSenderId: "319155188786",
+  appId: "1:319155188786:web:0eebc2cdb48d8f66b5f82b",
+  measurementId: "G-K8B6632RDE"
+};      // const app = firebase.initializeApp(firebaseConfig);
+      // const storage = app.firebase.storage()
+      // const storageRef = app.storage.ref();
+
+      // function uploadAudio(){
+        //  const audioInput = document.getElementById('song');
+        //  const audioFile = audioInput.files[0] //[0][1][2][3]
+        //  const audioRef = storageRef.child('audios/')
+        //  audioRef.put(audioFile)
+
+        // var progress = document.getElementById('progress')
+        // var result = document.getElementById('result')
+        // var loading = document.getElementById('loading');
+
+        // loading.style.visibility = "visible"
+        // }
+
+        try {
+          const app = firebase.initializeApp(firebaseConfig)
+          const audio = document.getElementById('song')
+
+          const btn = document.getElementById('uploadbtn')
+          btn.addEventListener('click', () => {
+            const selectedAudio = audio.files[0]
+            if(selectedAudio != undefined){
+              if(selectedAudio) {
+                const storage = firebase.storage().ref();
+                const audioFolder = storage.child('audios/' + selectedAudio.name).put(selectedAudio)
+                audioFolder.on('state_changed',
+                 (snapshot) => {
+                  //uploading time track the progress
+
+                  const progress = document.getElementById('progress')
+                  const presentProgress = parseInt((snapshot.bytesTransferred/snapshot.totalBytes)*100)
+                  progress.value = presentProgress;
+                  btn.innerText = `${presentProgress}% uploading..`
+                },
+                (error) => {
+                  // uploading time track the errors
+                },
+                () => {
+                  // if upload is success to handle some messages and get the online url of the file
+                  audioFolder.snapshot.ref.getDownloadURL()
+                  .then((url) => {
+                    alert("uploaded")
+                    console.log(url)
+
+
+                    // const a = document.createElement('a');
+                    // a.href = url;
+                    // a.textContent = url
+                    // document.body.append(a)
+
+                    //upload the data to realtime database
+
+                    const database = firebase.database();
+                    const Allaudios = database.ref('allAudios/')
+                    const name = document.getElementById('username').value;
+                    const albumName = document.getElementById('album').value;
+                    const desc = document.getElementById('desc').value;
+
+
+                    const data = {
+                      myAudioUrl:url,
+                      username:name,
+                      album:albumName,
+                      description:desc
+                    }
+
+                    
+                    Allaudios.push(data)
+                    .then(()=> {
+                      alert("uploaded data")
+                    })
+                    .catch((error) => {
+                      console.log(error)
+                    })
+                  })
+                  btn.innerText = "uploaded"
+                }
+                )
+              }
+            }
+          })
+        } catch (error) {
+          
+        }
+    </script>
+  </body>
+</html>
